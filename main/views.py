@@ -20,7 +20,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 def show_main(request):
     products = Product.objects.filter(user=request.user)
-
+    print(request.user)
     context = {
         'name': request.user.username,
         'class': 'PBP A', # Kelas PBP kamu
@@ -115,7 +115,7 @@ def delete_product(request, id):
     return HttpResponseRedirect(reverse('main:show_main'))
 
 def get_product_json(request):
-    product_item = Product.objects.all()
+    product_item = Product.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize('json', product_item))
 
 @csrf_exempt
